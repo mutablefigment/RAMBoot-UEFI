@@ -9,7 +9,8 @@ pub fn main() void {
     _ = con_out.reset(false);
 
     // Print some text
-    //_ = con_out.outputString("test\r\n");
+    const L = std.unicode.utf8ToUtf16LeStringLiteral;
+    _ = con_out.outputString(L("test\r\n"));
 
     // Wait 5 seconds
     _ = boot_services.stall(5 * 1000 * 1000);

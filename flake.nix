@@ -39,7 +39,8 @@
                   ];
 
                   enterShell = ''
-                    echo "${pkgs.OVMF.fd}/FV/OVMF.fd"
+                    export  OVFM=${pkgs.OVMF.fd}/FV/OVMF.fd
+                    echo $OVFM
                   '';
 
                   languages.zig.enable = true;
