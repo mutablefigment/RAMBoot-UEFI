@@ -11,7 +11,7 @@ if [ $? -eq 0 ]; then
     # directories. 
     mkdir -p systemroot/efi/boot/
     # Now, we copy the bootloader executable to a folder that will be recognized by UEFI. 
-    cp zig-out/bin/bootx64.efi systemroot/efi/boot/
+    cp zig-out/bin/RAMBoot-UEFI.efi systemroot/efi/boot/bootx64.efi
     # Here, we copy the kernel executable to a custom location
     # cp zig-out/bin/kernel systemroot/kernel.elf
     # With this command, we start QEMU (a computer emulator) with UEFI as firmware (`-bios OVMF.fd`),
