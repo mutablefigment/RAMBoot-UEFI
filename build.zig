@@ -13,11 +13,8 @@ pub fn build(b: *std.Build) void {
     // for restricting supported target set are available.
     // const target = b.standardTargetOptions(.{});
 
-    const uefi_target = CrossTarget{
-        .cpu_arch = Target.Cpu.Arch.x86_64,
-        .os_tag = Target.Os.Tag.uefi,
-        .abi = Target.Abi.msvc,
-    };
+    const uefi_query = CrossTarget{ .cpu_arch = Target.Cpu.Arch.x86_64, .os_tag = Target.Os.Tag.uefi, .abi = Target.Abi.msvc, .ofmt = Target.ObjectFormat.default(.uefi, .x86_64) };
+    const uefi_target = b.resolveTargetQuery(uefi_query);
 
     // Standard optimization options allow the person running `zig build` to select
     // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall. Here we do not
@@ -28,7 +25,7 @@ pub fn build(b: *std.Build) void {
         .name = "RAMBoot-UEFI",
         // In this case the main source file is merely a path, however, in more
         // complicated build scripts, this could be a generated file.
-        .root_source_file = .{ .path = "src/main.zig" },
+        .root_source_file = b.path("src/main.zig"),
         .target = uefi_target, //target,
         .optimize = optimize,
     });
@@ -64,7 +61,7 @@ pub fn build(b: *std.Build) void {
     // Creates a step for unit testing. This only builds the test executable
     // but does not run it.
     const unit_tests = b.addTest(.{
-        .root_source_file = .{ .path = "src/main.zig" },
+        .root_source_file = b.path("src/main.zig"),
         .target = uefi_target, //target,
         .optimize = optimize,
     });

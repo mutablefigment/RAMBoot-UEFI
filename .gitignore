@@ -1,5 +1,6 @@
 .devenv
 zig-cache/
+.zig-cache/
 zig-out/
-mount/
 systemroot/
+OVMF_VARS.fd

@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default";
     devenv.url = "github:cachix/devenv";
     devenv.inputs.nixpkgs.follows = "nixpkgs";
@@ -30,7 +30,6 @@
               inherit inputs pkgs;
               modules = [
                 {
-                  # https://devenv.sh/reference/options/
                   packages = with pkgs; [ 
                     edk2
                     edk2-uefi-shell
@@ -39,14 +38,13 @@
                   ];
 
                   enterShell = ''
-                    export  OVFM=${pkgs.OVMF.fd}/FV/OVMF.fd
-                    echo $OVFM
+                    export  OVFM=${pkgs.OVMF.fd}/FV/
                   '';
 
                   languages.zig.enable = true;
                   languages.c.enable = true;
 
-                  processes.emu.exec = "${pkgs.qemu}/bin/qemu-system-x86_64 -bios ${pkgs.OVMF.fd}/FV/OVMF.fd -hdd fat:rw:./drive";
+                  processes.emu.exec = "./run.sh";
                 }
               ];
             };
